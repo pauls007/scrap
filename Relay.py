@@ -10,7 +10,6 @@ import filefolders as ff
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/13/โมดูลรีเลย์-relay-module'
-#URL_Page = 'https://www.arduinothai.com/category/32/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-robot-part'
 Request_Page = requests.get(URL_Page)
 Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
 
@@ -112,4 +111,4 @@ df1 = df.copy()
 names = "Relay Module_"        
 ff.modify_folder(names,df1)
 
-print(df)
+#print(df)

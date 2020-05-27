@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[20]:
-
-
 import re
 import pandas as pd
 import requests
@@ -117,4 +111,4 @@ df1 = df.copy()
 names = "Mortor_"        
 ff.modify_folder(names,df1)
    
-print(df)
+#print(df)

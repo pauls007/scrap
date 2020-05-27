@@ -86,8 +86,6 @@ for i in Pages:
                  ChkStock = SoupStock.find('span', class_='num').text
                  StockOfProduct.append(ChkStock)
 
-
-
                  if((ProductCategory_jsonData==('วัดอุณหภูมิ / วัดความชื้น(Temp./Humi.)')) or (ProductCategory_jsonData==('วัดแสง / UV (Light / UV)')) 
                      or (ProductCategory_jsonData==('ตรวจจับเปลวไฟ')) or (ProductCategory_jsonData==('โมดูลแปลงสัญญาณ')) or (ProductCategory_jsonData==('วัดฝน/วัดความชื้นในดิน/วัดน้ำ (Rain / Soil / Water)')) 
                      or (ProductCategory_jsonData==('ความเคลื่อนไหว / ความสั่น / เสียง')) or (ProductCategory_jsonData==('วัดแรงดันอากาศ')) or (ProductCategory_jsonData==('Hall Magnetic')) 
@@ -114,4 +112,4 @@ df1 = df.copy()
 names = "เซนเซอร์วัดสภาพแวดล้อม_"        
 ff.modify_folder(names,df1)
    
-print(df)
+#print(df)

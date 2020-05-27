@@ -35,7 +35,6 @@ LinkProduct =[]
 StockOfProduct=[]
 ListOfProduct =[]
 
-
 for i in Pages:
 
             URL = 'https://www.arduinothai.com/category/32/อุปกรณ์หุ่นยนต์-robot-part?tskp='+str(i)
@@ -110,4 +109,4 @@ df1 = df.copy()
 names = "Robot Part_"        
 ff.modify_folder(names,df1)
 
-print(df)
+#print(df)

@@ -1,6 +1,3 @@
-# To add a new cell, type '# %%'
-# To add a new markdown cell, type '# %% [markdown]'
-# %%
 import re
 import pandas as pd
 import requests
@@ -41,9 +38,6 @@ StockOfProduct=[]
 ListOfProduct =[]
 
 Total_Page = np.arange(1,TotalPages,1)  #เป็นการ Set การ Load จำนวนหน้าของแต่ละเพจที่เราดึง
-
-'''for AllPage in Total_Page: #เป็นการวนลูปตามจำนวนหน้าที่เว็บมี'''
- #print(AllPage)
 
 count = 0
 for i in range(int(TotalPages)):
