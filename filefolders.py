@@ -32,7 +32,7 @@ def modify_folder(namesfolder,data):
                 encoding='utf-8-sig') 
 
      msg = ("Directory '% s' created" % name_folder)
-     messagebox.showinfo("สามารถสร้าง Folder ได้c]h;", msg)     
+     messagebox.showinfo("สามารถสร้าง Folder ได้แล้ว;", msg)     
      
      print("Directory '% s' created" % name_folder)
 
