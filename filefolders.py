@@ -2,6 +2,7 @@
 import os, sys, stat
 import socket
 
+from tkinter import messagebox
 from datetime import datetime
 
 def modify_folder(namesfolder,data):              
@@ -29,9 +30,17 @@ def modify_folder(namesfolder,data):
                 header=True, 
                 index=True, 
                 encoding='utf-8-sig') 
+
+     msg = ("Directory '% s' created" % name_folder)
+     messagebox.showinfo("สามารถสร้าง Folder ได้c]h;", msg)     
+     
      print("Directory '% s' created" % name_folder)
 
     except OSError as error:
+     
+     msg = ("Directory " , name_folder ,  " already exists")
+     messagebox.showinfo("ไม่สามารถสร้าง Folder ได้จร้าา", msg)   
+     
      print("Directory " , name_folder ,  " already exists")  
  #    print(path)
      print(error)
