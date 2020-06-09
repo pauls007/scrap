@@ -9,20 +9,8 @@ from urllib.error import HTTPError
 
 import filefolders as ff
 
-#from time import sleep
-#from random import randint
-
-
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/50/arduino-standalone-2'
-#Request_Page = requests.get(URL_Page)
-#Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
-
-''' เป็นการหาจำนวนหน้าของเพจ '''
-#Count_Next_Pages = Soups_Page.find_all('span','tsk-all')
-#TotalProduct = float(Count_Next_Pages[1].text)
-#TotalProductPerPage = 40
-#TotalPages = round(TotalProduct/TotalProductPerPage)
 
 TotalPages = ff.geturl(URL_Page)
 print('Total: ',TotalPages)
@@ -117,5 +105,3 @@ df1 = df.copy()
 
 names = "arduino_standalone_2"
 ff.modify_folder(names,df1)
-
-#print(df)

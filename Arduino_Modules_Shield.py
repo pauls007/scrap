@@ -110,12 +110,3 @@ df1 = df.copy()
 
 names = "Arduino_Modules_Shield"
 ff.modify_folder(names,df1)
-
-#print(df)
-
-
-# In[ ]:
-
-
-
-
