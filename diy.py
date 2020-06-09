@@ -6,21 +6,16 @@ from bs4 import BeautifulSoup
 from requests import get
 from datetime import datetime
 import filefolders as ff
-#from time import sleep
-#from random import randint
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
 
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
-URL_Page = 'https://www.arduinothai.com/category/105/diy-มีค่าจัดส่ง-สินค้ารหัสat30xxx'
-Request_Page = requests.get(URL_Page)
-Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
+URL_Page = 'https://www.arduinothai.com/category/105/diy-%E0%B8%A1%E0%B8%B5%E0%B8%84%E0%B9%88%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B9%88%E0%B8%87-%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AAat30xxx'
 
-''' เป็นการหาจำนวนหน้าของเพจ '''
-Count_Next_Pages = Soups_Page.find_all('span','tsk-all')
-TotalProduct = float(Count_Next_Pages[1].text)
-TotalProductPerPage = 40
-TotalPages = round(TotalProduct/TotalProductPerPage)
-#print(TotalPages)
+TotalPages = ff.geturl(URL_Page)
+print('Total: ',TotalPages)
+
 Pages=[]
 Counts = 1
 while Counts <= TotalPages:
@@ -39,9 +34,9 @@ ListOfProduct =[]
 
 for i in Pages:
     
-            URL = 'https://www.arduinothai.com/category/105/diy-มีค่าจัดส่ง-สินค้ารหัสat30xxx?tskp='+str(i)
-            Request = requests.get(URL)
-            soups = BeautifulSoup(Request.text, 'lxml')
+            URL = 'https://www.arduinothai.com/category/105/diy-%E0%B8%A1%E0%B8%B5%E0%B8%84%E0%B9%88%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B9%88%E0%B8%87-%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AAat30xxx?tskp='+str(i)
+            url_name = urlopen(URL)
+            soups = BeautifulSoup(url_name.read(), 'lxml')
             AllProduct = soups.find_all('div',class_='productDetail')
     
             for x in AllProduct:
@@ -83,10 +78,12 @@ for i in Pages:
                  CategoryProduct.append(ProductCategory_jsonData) 
 
                #Scrape Stock    
-                 URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
-                 SoupStock = BeautifulSoup(URL_Prefix.text, 'lxml')           
+                 URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
+                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')           
                  ChkStock = SoupStock.find('span', class_='num')
-                 StockOfProduct.append(ChkStock)
+                 Stockemp = ff.ConvertNoneToEmp(ChkStock)
+                 Stockstr = ff.ConvertListToStr(Stockemp)
+                 StockOfProduct.append(Stockstr)
 
                  if((ProductCategory_jsonData==('แหล่งจ่ายไฟ/Switching')) or (ProductCategory_jsonData==('อุปกรณ์ 3D Printer')) 
                      or (ProductCategory_jsonData==('Pulley/Belt/พูเล่ย์/สายพาน/โซ่')) or (ProductCategory_jsonData==('คัปปิ้ง/coupling')) 
@@ -115,5 +112,3 @@ df1 = df.copy()
 
 names = "DIY"
 ff.modify_folder(names,df1)
-
-#print(df)

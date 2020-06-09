@@ -1,22 +1,25 @@
-import re
+import re, requests, json, time, datetime, os
 import pandas as pd
-import requests
-import json
-import time
-import datetime
+#import requests
+#import json
+#import time
+#import datetime
 import numpy as np
-import os
+#import os
 import filefolders as ff
 
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
 from bs4 import BeautifulSoup
 from requests import get
 from time import sleep
 from datetime import datetime
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
-URL = 'https://www.arduinothai.com/category/90/สินค้าราคาพิเศษ-หลุดqc'
-Request = requests.get(URL)
-soups = BeautifulSoup(Request.text, 'lxml')
+URL_Page = urlopen('https://www.arduinothai.com/category/90/%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%9E%E0%B8%B4%E0%B9%80%E0%B8%A8%E0%B8%A9-%E0%B8%AB%E0%B8%A5%E0%B8%B8%E0%B8%94qc')
+
+#Request = requests.get(URL)
+soups = BeautifulSoup(URL_Page.read(), 'lxml')
 
 ''' เป็นการหาจำนวนหน้าของเพจ '''
 Count_Next_Pages = soups.find_all('span','tsk-all')[-1].extract()
@@ -42,10 +45,10 @@ Total_Page = np.arange(1,TotalPages,1)  #เป็นการ Set การ Loa
 count = 0
 for i in range(int(TotalPages)):
     count+=1
-    i = 'https://www.arduinothai.com/category/90/สินค้าราคาพิเศษ-หลุดqc?tskp='+str(count)
+    i = urlopen('https://www.arduinothai.com/category/90/%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%9E%E0%B8%B4%E0%B9%80%E0%B8%A8%E0%B8%A9-%E0%B8%AB%E0%B8%A5%E0%B8%B8%E0%B8%94qc?tskp='+str(count))
     print(i)
-    Request_Data = requests.get(i)
-    Soups_Data = BeautifulSoup(Request_Data.text, 'lxml')
+    #Request_Data = requests.get(i)
+    Soups_Data = BeautifulSoup(i.read(), 'lxml')
     AllProduct = Soups_Data.find_all('div',class_='productDetail')
 
 for x in AllProduct:
@@ -85,8 +88,8 @@ for x in AllProduct:
      CategoryProduct.append(ProductCategory_jsonData) 
    
    #Scrape Stock    
-     URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
-     SoupStock = BeautifulSoup(URL_Prefix.text, 'lxml')   
+     URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
+     SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')   
      ChkStock = SoupStock.find('span', class_='num').text
      StockOfProduct.append(ChkStock)
    
@@ -112,4 +115,4 @@ df1 = df.copy()
 names = "qcout_"        
 ff.modify_folder(names,df1)
    
-df
+#df

@@ -12,35 +12,15 @@ from bs4 import BeautifulSoup
 from requests import get
 from datetime import datetime
 import filefolders as ff
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
 #from time import sleep
-#from random import randint
-
-'''--------------------------------------- เลือกรูปแบบในการแสดงข้อมูล--------------------------------------------------------'''
-'''ข้อมูล 1 หน้า'''
-#Request = requests.get('https://www.arduinothai.com/category/157/microbit')
-#Request = requests.get('https://www.arduinothai.com/category/5/sensor-modules-shield')
-'''ข้อมูล 2 หน้า'''
-#Request = requests.get('https://www.arduinothai.com/category/2/arduino-compatible-board')
-#Request = requests.get('https://www.arduinothai.com/category/32/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-robot-part')
-'''ข้อมูล 6 หน้า'''
-#Request = requests.get('https://www.arduinothai.com/category/54/%E0%B8%A3%E0%B8%B0%E0%B8%9A%E0%B8%9A%E0%B9%84%E0%B8%9F%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87')
-'''ข้อมูล 9 หน้า'''
-#Request = requests.get('https://www.arduinothai.com/category/105/diy-%E0%B8%A1%E0%B8%B5%E0%B8%84%E0%B9%88%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B9%88%E0%B8%87-%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AAat30xxx')
-'''------------------------------------------------------------------------------------------------------------------------'''
-
-
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
-URL_Page = 'https://www.arduinothai.com/category/20/learning-kit-ชุดฝึก-ชุดสอนเด็ก'
-#URL_Page = 'https://www.arduinothai.com/category/32/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-robot-part'
-Request_Page = requests.get(URL_Page)
-Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
+URL_Page = 'https://www.arduinothai.com/category/20/learning-kit-%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%9D%E0%B8%B6%E0%B8%81-%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%99%E0%B9%80%E0%B8%94%E0%B9%87%E0%B8%81'
 
-''' เป็นการหาจำนวนหน้าของเพจ '''
-Count_Next_Pages = Soups_Page.find_all('span','tsk-all')
-TotalProduct = float(Count_Next_Pages[1].text)
-TotalProductPerPage = 40
-TotalPages = round(TotalProduct/TotalProductPerPage)
-#print(TotalPages)
+TotalPages = ff.geturl(URL_Page)
+print('Total: ',TotalPages)
+
 Pages=[]
 Counts = 1
 while Counts <= TotalPages:
@@ -62,9 +42,9 @@ ListOfProduct =[]
 
 for i in Pages:
     
-            URL = 'https://www.arduinothai.com/category/20/learning-kit-ชุดฝึก-ชุดสอนเด็ก?tskp='+str(i)
-            Request = requests.get(URL)
-            soups = BeautifulSoup(Request.text, 'lxml')
+            URL = 'https://www.arduinothai.com/category/20/learning-kit-%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%9D%E0%B8%B6%E0%B8%81-%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%99%E0%B9%80%E0%B8%94%E0%B9%87%E0%B8%81?tskp='+str(i)
+            url_name = urlopen(URL)
+            soups = BeautifulSoup(url_name.read(), 'lxml')
             AllProduct = soups.find_all('div',class_='productDetail')
     
             def ConvertNoneToEmp(ValueNone):
@@ -117,8 +97,8 @@ for i in Pages:
                  CategoryProduct.append(ProductCategory_jsonData) 
 
                #Scrape Stock    
-                 URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
-                 SoupStock = BeautifulSoup(URL_Prefix.text, 'lxml')           
+                 URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
+                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')              
                  ChkStock = SoupStock.find('span', class_='num')
                  StockOfProduct.append(ChkStock)
 
@@ -146,5 +126,3 @@ df1 = df.copy()
         
 names = "Learning Kit_"        
 ff.modify_folder(names,df1)
-
-#print(df)

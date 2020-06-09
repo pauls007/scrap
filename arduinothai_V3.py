@@ -5,21 +5,16 @@ import json
 from bs4 import BeautifulSoup
 from requests import get
 import filefolders as ff
-#from time import sleep
-#from random import randint
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
 
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/2/arduino-compatible-board'
-Request_Page = requests.get(URL_Page)
-Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
 
-''' เป็นการหาจำนวนหน้าของเพจ '''
-Count_Next_Pages = Soups_Page.find_all('span','tsk-all')
-TotalProduct = float(Count_Next_Pages[1].text)
-TotalProductPerPage = 40
-TotalPages = round(TotalProduct/TotalProductPerPage)
-#print(TotalPages)
+TotalPages = ff.geturl(URL_Page)
+print('Total: ',TotalPages)
+
 Pages=[]
 Counts = 1
 while Counts <= TotalPages:
@@ -39,8 +34,8 @@ ListOfProduct =[]
 for i in Pages:
 
             URL = 'https://www.arduinothai.com/category/2/arduino-compatible-board?tskp='+str(i)
-            Request = requests.get(URL)
-            soups = BeautifulSoup(Request.text, 'lxml')
+            url_name = urlopen(URL)
+            soups = BeautifulSoup(url_name.read(), 'lxml')
             AllProduct = soups.find_all('div',class_='productDetail')
     
             for x in AllProduct:
@@ -81,8 +76,8 @@ for i in Pages:
                  CategoryProduct.append(ProductCategory_jsonData) 
 
                #Scrape Stock    
-                 URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
-                 SoupStock = BeautifulSoup(URL_Prefix.text, 'lxml')   
+                 URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
+                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')    
                  ChkStock = SoupStock.find('span', class_='num').text
                  StockOfProduct.append(ChkStock)
 
@@ -109,6 +104,4 @@ for i in Pages:
 df1 = df.copy()
 
 names = "Arduino_Compatible_Board"
-ff.modify_folder(names,df1)
-
-#print(df)                    
+ff.modify_folder(names,df1)                 

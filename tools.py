@@ -12,13 +12,16 @@ from bs4 import BeautifulSoup
 from requests import get
 from datetime import datetime
 import filefolders as ff
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
 #from time import sleep
 #from random import randint
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
-URL_Page = 'https://www.arduinothai.com/category/12/tool-เครื่องมือ'
-Request_Page = requests.get(URL_Page)
-Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
+URL_Page = urlopen('https://www.arduinothai.com/category/12/tool-%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%A1%E0%B8%B7%E0%B8%AD')
+
+Soups_Page = BeautifulSoup(URL_Page.read(), 'lxml')
+#Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
 
 ''' เป็นการหาจำนวนหน้าของเพจ '''
 Count_Next_Pages = Soups_Page.find_all('span','tsk-all')[-1].extract()
@@ -47,9 +50,9 @@ ListOfProduct =[]
 
 for i in Pages:
     
-            URL = 'https://www.arduinothai.com/category/12/tool-เครื่องมือ?tskp='+str(i)
-            Request = requests.get(URL)
-            soups = BeautifulSoup(Request.text, 'lxml')
+            URL = 'https://www.arduinothai.com/category/12/tool-%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%A1%E0%B8%B7%E0%B8%AD?tskp='+str(i)
+            url_name = urlopen(URL)
+            soups = BeautifulSoup(url_name.read(), 'lxml')
             AllProduct = soups.find_all('div',class_='productDetail')
     
             def ConvertNoneToEmp(ValueNone):
@@ -102,8 +105,8 @@ for i in Pages:
                  CategoryProduct.append(ProductCategory_jsonData) 
 
                #Scrape Stock    
-                 URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
-                 SoupStock = BeautifulSoup(URL_Prefix.text, 'lxml')           
+                 URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
+                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')            
                  Stocks = SoupStock.find('span', class_='num')
                  ChkStock = int(str(Stocks.text))
                  StockOfProduct.append(ChkStock)

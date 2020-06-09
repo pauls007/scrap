@@ -1,11 +1,12 @@
 import re
 import pandas as pd
 import requests
-import json
+import json, urllib.request
 from bs4 import BeautifulSoup
 from requests import get
 from datetime import datetime
-
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
 import filefolders as ff
 
 #from time import sleep
@@ -13,15 +14,10 @@ import filefolders as ff
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/54/%E0%B8%A3%E0%B8%B0%E0%B8%9A%E0%B8%9A%E0%B9%84%E0%B8%9F%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87'
-Request_Page = requests.get(URL_Page)
-Soups_Page = BeautifulSoup(Request_Page.text, 'lxml')
 
-''' เป็นการหาจำนวนหน้าของเพจ '''
-Count_Next_Pages = Soups_Page.find_all('span','tsk-all')
-TotalProduct = float(Count_Next_Pages[1].text)
-TotalProductPerPage = 40
-TotalPages = round(TotalProduct/TotalProductPerPage)
-#print(TotalPages)
+TotalPages = ff.geturl(URL_Page)
+print('Total: ',TotalPages)
+
 Pages=[]
 Counts = 1
 while Counts <= TotalPages:
@@ -37,12 +33,11 @@ LinkProduct =[]
 StockOfProduct=[]
 ListOfProduct =[]
 
-
 for i in Pages:
     
             URL = 'https://www.arduinothai.com/category/54/%E0%B8%A3%E0%B8%B0%E0%B8%9A%E0%B8%9A%E0%B9%84%E0%B8%9F%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87?tskp='+str(i)
-            Request = requests.get(URL)
-            soups = BeautifulSoup(Request.text, 'lxml')
+            url_name = urlopen(URL)
+            soups = BeautifulSoup(url_name.read(), 'lxml')
             AllProduct = soups.find_all('div',class_='productDetail')
 
             for x in AllProduct:
@@ -84,9 +79,10 @@ for i in Pages:
                  CategoryProduct.append(ProductCategory_jsonData) 
 
                #Scrape Stock    
-                 URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
-                 SoupStock = BeautifulSoup(URL_Prefix.text, 'lxml')           
-                 ChkStock = SoupStock.find('span', class_='num')
+                 #URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
+                 URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
+                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')           
+                 ChkStock = SoupStock.find('span', class_='num').text
                  StockOfProduct.append(ChkStock)
 
 

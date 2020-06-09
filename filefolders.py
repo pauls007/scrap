@@ -2,8 +2,29 @@
 import os, sys, stat
 import socket
 
+from bs4 import BeautifulSoup 
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
 from tkinter import messagebox
 from datetime import datetime
+
+def geturl(url):
+    try:
+        html = urlopen(url)
+    except HTTPError as e:
+        return None
+
+    try:
+            Soups = BeautifulSoup(html.read(), 'lxml')
+            Count_Next_Pages = Soups.find_all('span','tsk-all')
+            TotalProduct = float(Count_Next_Pages[1].text)
+            TotalProductPerPage = 40
+            AllPages = round(TotalProduct/TotalProductPerPage)
+            
+            #title = soups.body.h3
+    except AttributeError as e:
+            return None
+    return AllPages
 
 def modify_folder(namesfolder,data):              
     todays = datetime.now()

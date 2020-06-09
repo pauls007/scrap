@@ -9,24 +9,13 @@ from time import sleep
 from random import randint
 from datetime import datetime
 import filefolders as ff
-    
+from urllib.request import urlopen 
+from urllib.error import HTTPError 
+
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL = 'https://www.arduinothai.com/category/157/microbit'
-Request = requests.get(URL)
-soups = BeautifulSoup(Request.text, 'lxml')
-
-''' เป็นการหาจำนวนหน้าของเพจ '''
-Count_Next_Pages = soups.find_all('span','tsk-all')
-TotalProduct = int(Count_Next_Pages[1].text)
-
-TotalProductPerPage = 40
-TotalPages = (round(TotalProduct/TotalProductPerPage))
-
-
-AllProduct = soups.find_all('div',class_='productDetail')
-TypeProduct = soups.find('h2',class_='headerText').text
-
-
+TotalPages = ff.geturl(URL)
+print('Total: ',TotalPages)
 
 ProductIDAll=[]
 Productname=[]
@@ -48,10 +37,10 @@ count = 0
 for i in range(int(TotalPages)):
     count+=1
     i = 'https://www.arduinothai.com/category/157/microbit?tskp='+str(count)
-    #print(i)
-    Request_Data = requests.get(i)
-    Soups_Data = BeautifulSoup(Request_Data.text, 'lxml')
-    AllProduct = Soups_Data.find_all('div',class_='productDetail')
+    url_name = urlopen(URL)
+#            Request = requests.get(URL)
+    soups = BeautifulSoup(url_name.read(), 'lxml')
+    AllProduct = soups.find_all('div',class_='productDetail')
 
 for x in AllProduct:
 
@@ -93,8 +82,8 @@ for x in AllProduct:
  
    
    #Scrape Stock    
-     URL_Prefix =requests.get('https://www.arduinothai.com/product/'+str(IDProductLink))
-     SoupStock = BeautifulSoup(URL_Prefix.text, 'lxml')   
+     URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
+     SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml') 
      ChkStock = SoupStock.find('span', class_='num').text
      StockOfProduct.append(ChkStock)
    
@@ -118,5 +107,3 @@ df1 = df.copy()
    
 names = "Microbit"
 ff.modify_folder(names,df1)    
-
-#print(df)
