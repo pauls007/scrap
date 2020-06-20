@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[31]:
-
-
 import re
 import pandas as pd
 import requests
@@ -16,6 +10,7 @@ from urllib.request import urlopen
 from urllib.error import HTTPError 
 #from time import sleep
 #from random import randint
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = urlopen('https://www.arduinothai.com/category/12/tool-%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%A1%E0%B8%B7%E0%B8%AD')

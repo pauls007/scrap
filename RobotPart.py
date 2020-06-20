@@ -10,6 +10,7 @@ from urllib.request import urlopen
 from urllib.error import HTTPError 
 #from time import sleep
 #from random import randint
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/32/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-robot-part'

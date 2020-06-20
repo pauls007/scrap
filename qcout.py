@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 #import os
 import filefolders as ff
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 
 from urllib.request import urlopen 
 from urllib.error import HTTPError 

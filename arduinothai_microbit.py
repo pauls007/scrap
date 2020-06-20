@@ -11,6 +11,7 @@ from datetime import datetime
 import filefolders as ff
 from urllib.request import urlopen 
 from urllib.error import HTTPError 
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL = 'https://www.arduinothai.com/category/157/microbit'

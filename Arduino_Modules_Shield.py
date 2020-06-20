@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from requests import get
 from urllib.request import urlopen 
 from urllib.error import HTTPError 
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 
 import filefolders as ff
 

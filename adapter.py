@@ -8,6 +8,7 @@ from datetime import datetime
 from urllib.request import urlopen 
 from urllib.error import HTTPError 
 import filefolders as ff   
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 
 #from time import sleep
 #from random import randint

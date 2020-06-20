@@ -7,7 +7,7 @@ from requests import get
 import filefolders as ff
 from urllib.request import urlopen 
 from urllib.error import HTTPError 
-
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/4/motor-drive-%E0%B9%82%E0%B8%A1%E0%B8%94%E0%B8%B9%E0%B8%A5%E0%B8%82%E0%B8%B1%E0%B8%9A%E0%B8%A1%E0%B8%AD%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C'
 

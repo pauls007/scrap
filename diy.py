@@ -8,7 +8,7 @@ from datetime import datetime
 import filefolders as ff
 from urllib.request import urlopen 
 from urllib.error import HTTPError 
-
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/105/diy-%E0%B8%A1%E0%B8%B5%E0%B8%84%E0%B9%88%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B9%88%E0%B8%87-%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AAat30xxx'

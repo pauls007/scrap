@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[20]:
-
-
 import re
 import pandas as pd
 import requests
@@ -13,7 +7,7 @@ from requests import get
 import time
 from urllib.request import urlopen 
 from urllib.error import HTTPError 
-
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 import filefolders as ff
 
 start_time = time.time()

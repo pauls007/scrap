@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 import re
 import pandas as pd
 import requests
@@ -14,6 +8,7 @@ from datetime import datetime
 import filefolders as ff
 from urllib.request import urlopen 
 from urllib.error import HTTPError 
+import ssl; ssl._create_default_https_context = ssl._create_stdlib_context
 #from time import sleep
 '''การกำหนดค่า URL ที่เราต้องการจะ Scraper ข้อมูล'''
 URL_Page = 'https://www.arduinothai.com/category/20/learning-kit-%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%9D%E0%B8%B6%E0%B8%81-%E0%B8%8A%E0%B8%B8%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%99%E0%B9%80%E0%B8%94%E0%B9%87%E0%B8%81'
