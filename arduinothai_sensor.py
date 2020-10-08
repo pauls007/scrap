@@ -85,8 +85,12 @@ for i in Pages:
                #Scrape Stock    
                  URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
                  SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')      
-                 ChkStock = SoupStock.find('span', class_='num').text
-                 StockOfProduct.append(ChkStock)
+                 ChkStock = SoupStock.find('span', class_='num')
+                 Stockemp = ff.ConvertNoneToEmp(ChkStock)
+                 Stockstr = ff.ConvertListToStr(Stockemp)
+                 StockOfProduct.append(Stockstr) 
+#                 ChkStock = SoupStock.find('span', class_='num').text
+#                 StockOfProduct.append(ChkStock)
 
 
 

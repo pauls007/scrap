@@ -85,8 +85,12 @@ for x in AllProduct:
    #Scrape Stock    
      URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
      SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml') 
-     ChkStock = SoupStock.find('span', class_='num').text
-     StockOfProduct.append(ChkStock)
+     ChkStock = SoupStock.find('span', class_='num')
+     Stockemp = ff.ConvertNoneToEmp(ChkStock)
+     Stockstr = ff.ConvertListToStr(Stockemp)
+     StockOfProduct.append(Stockstr) 
+#     ChkStock = SoupStock.find('span', class_='num').text
+#     StockOfProduct.append(ChkStock)
    
      if((ProductCategory_jsonData==('บอร์ด')) or (ProductCategory_jsonData==('หุ่นยนต์')) or (ProductCategory_jsonData==('อุปกรณ์เสริม')) or (ProductCategory_jsonData==('Case')) ):
 

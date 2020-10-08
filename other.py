@@ -93,9 +93,10 @@ for i in Pages:
                #Scrape Stock    
                  URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
                  SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')              
-                 Stocks = SoupStock.find('span', class_='num')
-                 ChkStock = int(str(Stocks.text))
-                 StockOfProduct.append(ChkStock)
+                 ChkStock = SoupStock.find('span', class_='num')
+                 Stockemp = ff.ConvertNoneToEmp(ChkStock)
+                 Stockstr = ff.ConvertListToStr(Stockemp)
+                 StockOfProduct.append(Stockstr) 
 
                  if((ProductCategory_jsonData==('สายไฟ (jump wire)')) or (ProductCategory_jsonData==('กลอนไฟฟ้า')) 
                      or (ProductCategory_jsonData==('USB Module/USB Communication')) or (ProductCategory_jsonData==('Other'))):
