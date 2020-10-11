@@ -40,6 +40,16 @@ for i in Pages:
             soups = BeautifulSoup(url_name.read(), 'lxml')
             AllProduct = soups.find_all('div',class_='productDetail')
 
+            def ConvertNoneToEmp(ValueNone):
+                if ValueNone is None:
+                    return'-'
+                else:
+                    return ValueNone
+
+            def ConvertListToStr(ValueList):
+                ConvertValueStr =' '.join([str(elem) for elem in ValueList])
+                return ConvertValueStr            
+
             for x in AllProduct:
 
 
@@ -79,10 +89,11 @@ for i in Pages:
 
                #Scrape Stock    
                  URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
-                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')         
-                 Stocks = SoupStock.find('span', class_='num')
-                 ChkStock = int(str(Stocks.text))
-                 StockOfProduct.append(ChkStock)
+                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')             
+                 ChkStock = SoupStock.find('span', class_='num')
+                 Stockemp = ConvertNoneToEmp(ChkStock)
+                 Stockstr = ConvertListToStr(Stockemp)
+                 StockOfProduct.append(Stockstr)
 
                  if((ProductCategory_jsonData==('เซนเซอร์ / Sensor')) or (ProductCategory_jsonData==('ล้อ / wheel')) or (ProductCategory_jsonData==('มือจับ/Gripper')) 
                     or (ProductCategory_jsonData==('Smart car/โครงสร้าง/ชุดขับเคลื่อน/ชุดหุ่นยนต์')) or (ProductCategory_jsonData==('ไอซีที่เกี่ยวข้อง'))

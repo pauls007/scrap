@@ -93,7 +93,7 @@ for i in Pages:
                  Stockemp = ff.ConvertNoneToEmp(ChkStock)
                  Stockstr = ff.ConvertListToStr(Stockemp)
                  StockOfProduct.append(Stockstr) 
-
+#gggg
 
 
                  if((ProductCategory_jsonData==('Motor Drive Shield')) or (ProductCategory_jsonData==('Motor Drive'))):

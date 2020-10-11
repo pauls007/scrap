@@ -94,9 +94,7 @@ for i in Pages:
                  Stockemp = ff.ConvertNoneToEmp(ChkStock)
                  Stockstr = ff.ConvertListToStr(Stockemp)
                  StockOfProduct.append(Stockstr) 
-#                 ChkStock = SoupStock.find('span', class_='num').text
-#                 StockOfProduct.append(ChkStock)
-
+#ttttt
                  if((ProductCategory_jsonData==('NodeMCU/ESP8266')) or (ProductCategory_jsonData==('ESP32')) or (ProductCategory_jsonData==('Wemos')) 
                      or (ProductCategory_jsonData==('Sonoff/โมดูลเปิดปิดไฟผ่านมือถือ'))):
 

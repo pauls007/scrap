@@ -81,11 +81,11 @@ for i in Pages:
 
                #Scrape Stock    
                  URL_Prefix = urlopen('https://www.arduinothai.com/product/'+str(IDProductLink))
-                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')            
-                 ChkStock = SoupStock.find('span', class_='num').text
-                 StockOfProduct.append(ChkStock)
-
-
+                 SoupStock = BeautifulSoup(URL_Prefix.read(), 'lxml')                   
+                 ChkStock = SoupStock.find('span', class_='num')
+                 Stockemp = ff.ConvertNoneToEmp(ChkStock)
+                 Stockstr = ff.ConvertListToStr(Stockemp)
+                 StockOfProduct.append(Stockstr)
 
                  if((ProductCategory_jsonData==('รีเลย์ / Relay')) or (ProductCategory_jsonData==('LED')) or (ProductCategory_jsonData==('ก้างปลา/Pin Header/Socket')) 
                      or (ProductCategory_jsonData==('Breadboard/PCB Universal')) or (ProductCategory_jsonData==('USB')) or (ProductCategory_jsonData==('Crystal')) 

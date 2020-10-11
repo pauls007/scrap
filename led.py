@@ -99,10 +99,7 @@ for i in Pages:
                  Stockemp = ff.ConvertNoneToEmp(ChkStock)
                  Stockstr = ff.ConvertListToStr(Stockemp)
                  StockOfProduct.append(Stockstr) 
-#                 ChkStock = SoupStock.find('span', class_='num').text
-#                 StockOfProduct.append(ChkStock)
-
-
+#yyyyyy
 
                  if((ProductCategory_jsonData==('LED/LCD Display')) or (ProductCategory_jsonData==('OLED Display')) 
                      or (ProductCategory_jsonData==('Nextion')) or (ProductCategory_jsonData==('Dot matrix'))):
